@@ -101,8 +101,9 @@ h1 {
   transition: 0.3s;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+..card {
+  will-change: transform;
+}
   box-shadow: 0 0 30px rgba(255, 140, 0, 0.2);
 }
 
