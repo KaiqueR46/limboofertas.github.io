@@ -168,6 +168,52 @@ h1 {
   font-weight: bold;
 }
 
+/* ===== OFERTA RELÂMPAGO ===== */
+
+.flash-title {
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 25px 0 12px 0;
+  color: white;
+}
+
+.flash-container {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+}
+
+.flash-container::-webkit-scrollbar {
+  display: none;
+}
+
+.flash-item {
+  min-width: 80px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.flash-item img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 6px auto;
+  transition: 0.2s ease;
+}
+
+.flash-item img:hover {
+  transform: scale(1.05);
+}
+
+.flash-name {
+  font-size: 12px;
+  color: white;
+}    
 
 </style>
 </head>
