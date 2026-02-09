@@ -1005,16 +1005,17 @@ fetch("ofertas.json")
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    // Remove classes antigas primeiro
+    // Remove classes antigas
 timerElement.classList.remove("danger", "urgent");
 
-// 🔴 Vermelho quando faltar menos de 1 hora
-if (hours < 1 && minutes >= 10) {
+// 🔴 Menos de 1 hora = vermelho
+if (hours === 0) {
   timerElement.classList.add("danger");
 }
 
-// 🚨 Vermelho piscando nos últimos 10 minutos
+// 🚨 Últimos 10 minutos = vermelho piscando
 if (hours === 0 && minutes < 10) {
+  timerElement.classList.remove("danger");
   timerElement.classList.add("urgent");
 }
 
