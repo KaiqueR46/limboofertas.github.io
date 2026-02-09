@@ -829,12 +829,18 @@ fetch("ofertas.json")
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    // 🔥 Muda a cor quando faltar menos de 1 hora
-    if (hours < 1) {
-      timerElement.classList.add("danger");
-    } else {
-      timerElement.classList.remove("danger");
-    }
+    // Remove classes antigas primeiro
+timerElement.classList.remove("danger", "urgent");
+
+// 🔴 Vermelho quando faltar menos de 1 hora
+if (hours < 1 && minutes >= 10) {
+  timerElement.classList.add("danger");
+}
+
+// 🚨 Vermelho piscando nos últimos 10 minutos
+if (hours === 0 && minutes < 10) {
+  timerElement.classList.add("urgent");
+}
 
     timerElement.textContent =
       hours.toString().padStart(2, "0") + ":" +
