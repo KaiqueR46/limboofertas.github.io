@@ -760,6 +760,28 @@ window.addEventListener('load', () => {
 
   }, 800);
 });
+
+fetch("ofertas.json")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.querySelector(".flash-container");
+
+    data.forEach(product => {
+      const item = document.createElement("a");
+      item.href = product.link;
+      item.target = "_blank";
+      item.className = "flash-item";
+
+      item.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <div class="flash-name">
+          ${product.name}
+        </div>
+      `;
+
+      container.appendChild(item);
+    });
+  });
     
 </script>
 
