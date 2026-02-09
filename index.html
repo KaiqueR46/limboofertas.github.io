@@ -812,23 +812,39 @@ window.addEventListener('load', () => {
 fetch("ofertas.json")
   .then(response => response.json())
   .then(data => {
-    const container = document.querySelector(".flash-container");
 
-    data.forEach(product => {
+    const container = document.querySelector(".flash-container");
+    container.innerHTML = "";
+
+    const cycleDuration = 5 * 60 * 60 * 1000; // 5 horas
+    const now = Date.now();
+    const currentCycle = Math.floor(now / cycleDuration);
+
+    const itemsPerCycle = 10;
+    const totalBlocks = Math.ceil(data.length / itemsPerCycle);
+
+    const currentBlock = currentCycle % totalBlocks;
+
+    const startIndex = currentBlock * itemsPerCycle;
+    const endIndex = startIndex + itemsPerCycle;
+
+    const selectedProducts = data.slice(startIndex, endIndex);
+
+    selectedProducts.forEach(produto => {
+
       const item = document.createElement("a");
-      item.href = product.link;
+      item.href = produto.link;
       item.target = "_blank";
       item.className = "flash-item";
 
       item.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <div class="flash-name">
-          ${product.name}
-        </div>
+        <img src="${produto.imagem}" alt="${produto.nome}">
+        <div class="flash-name">${produto.nome}</div>
       `;
 
       container.appendChild(item);
     });
+
   });
 
  function startGlobalFlashTimer() {
