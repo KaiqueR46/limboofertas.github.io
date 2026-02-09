@@ -799,7 +799,11 @@ fetch("ofertas.json")
     const now = new Date();
 
     const currentHour = now.getHours();
-    const nextBlockHour = Math.ceil(currentHour / 5) * 5;
+    const currentMinutes = now.getMinutes();
+    const currentSeconds = now.getSeconds();
+
+    // Calcula o próximo bloco de 5 horas corretamente
+    let nextBlockHour = Math.floor(currentHour / 5) * 5 + 5;
 
     const nextTime = new Date(now);
 
@@ -811,6 +815,10 @@ fetch("ofertas.json")
     }
 
     const diff = nextTime - now;
+
+    if (diff <= 0) {
+      return;
+    }
 
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
