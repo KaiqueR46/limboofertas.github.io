@@ -737,6 +737,32 @@ searchInput.addEventListener('keyup', function() {
         }
     });
 });
+
+const flashContainer = document.querySelector('.flash-container');
+const flashIndicator = document.getElementById('flashIndicator');
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    flashContainer.scrollBy({
+      left: 120,
+      behavior: 'smooth'
+    });
+
+    setTimeout(() => {
+      flashContainer.scrollBy({
+        left: -60,
+        behavior: 'smooth'
+      });
+
+      setTimeout(() => {
+        flashIndicator.style.opacity = "1";
+      }, 600);
+
+    }, 1200);
+
+  }, 800);
+});
+    
 </script>
 
 </body>
