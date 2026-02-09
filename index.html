@@ -751,6 +751,44 @@ fetch("ofertas.json")
       container.appendChild(item);
     });
   });
+
+ function startPersistentFlashTimer(hoursDuration) {
+  const timerElement = document.getElementById("flashTimer");
+  const storageKey = "flashEndTime";
+
+  let endTime = localStorage.getItem(storageKey);
+
+  if (!endTime) {
+    endTime = new Date().getTime() + hoursDuration * 60 * 60 * 1000;
+    localStorage.setItem(storageKey, endTime);
+  }
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const distance = endTime - now;
+
+    if (distance <= 0) {
+      // Reinicia automaticamente
+      endTime = new Date().getTime() + hoursDuration * 60 * 60 * 1000;
+      localStorage.setItem(storageKey, endTime);
+      return;
+    }
+
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    timerElement.innerHTML =
+      String(hours).padStart(2, "0") + ":" +
+      String(minutes).padStart(2, "0") + ":" +
+      String(seconds).padStart(2, "0");
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+startPersistentFlashTimer(5); // 5 horas   
     
 </script>
 
