@@ -1151,7 +1151,7 @@ fetch("descontos.json")
     const now = Date.now();
     const currentCycle = Math.floor(now / cycleDuration);
 
-    const itemsPerCycle = 10; // quantos produtos mostrar
+    const itemsPerCycle = 20; // quantos produtos mostrar
     const totalBlocks = Math.ceil(data.length / itemsPerCycle);
 
     const currentBlock = currentCycle % totalBlocks;
