@@ -1160,15 +1160,27 @@ fetch("descontos.json")
       container.appendChild(item);
     });
 
-    // Inicia animação de scroll leve
-    setTimeout(() => {
-      if(container.scrollWidth > container.clientWidth){
-        container.scrollBy({ left: 30, behavior: 'smooth' });
-        setTimeout(() => container.scrollBy({ left: -30, behavior: 'smooth' }), 500);
-      }
-    }, 500);
-  });
+    const descontosIndicator = document.getElementById("descontosIndicator");
 
+// Mostra o indicador
+setTimeout(() => {
+  descontosIndicator.style.opacity = "1";
+}, 1500);
+
+// Scroll vai →
+setTimeout(() => {
+  if(container.scrollWidth > container.clientWidth){
+    container.scrollBy({ left: 60, behavior: 'smooth' });
+  }
+}, 2000);
+
+// Scroll volta ←
+setTimeout(() => {
+  if(container.scrollWidth > container.clientWidth){
+    container.scrollBy({ left: -60, behavior: 'smooth' });
+  }
+}, 3500);
+      
 // ===== TIMER GLOBAL 24H =====
 function startDescontosTimer() {
   const timerElement = document.getElementById("descontosTimer");
