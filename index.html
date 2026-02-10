@@ -1005,6 +1005,9 @@ fetch("ofertas.json")
   .then(response => response.json())
   .then(data => {
 
+   // ✅ Proteção contra JSON vazio ou erro
+    if (!data || data.length === 0) return;
+      
     const container = document.getElementById("flashSection");
     container.innerHTML = "";
 
@@ -1128,6 +1131,9 @@ fetch("descontos.json")
   .then(response => response.json())
   .then(data => {
 
+    // ✅ Proteção contra JSON vazio ou erro
+    if (!data || data.length === 0) return;
+      
     const container = document.getElementById("descontosSection");
     container.innerHTML = "";
 
