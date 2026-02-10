@@ -1005,7 +1005,7 @@ fetch("ofertas.json")
   .then(response => response.json())
   .then(data => {
 
-    const container = document.querySelector(".flash-container");
+    const container = document.getElementById("flashSection");
     container.innerHTML = "";
 
     const cycleDuration = 5 * 60 * 60 * 1000; // 5 horas
