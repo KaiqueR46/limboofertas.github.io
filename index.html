@@ -943,50 +943,50 @@ h1 {
 </div>
 
 <script>
-const searchInput = document.getElementById('searchInput');
-const products = document.querySelectorAll('.card[data-name]');
-
 searchInput.addEventListener('keyup', function() {
-    const searchValue = this.value.toLowerCase();
 
+    const searchValue = this.value.toLowerCase().trim();
+
+    const flashHeader = document.getElementById("flashSectionHeader");
+    const flashSection = document.getElementById("flashSection");
+    const flashIndicator = document.getElementById("flashIndicator");
+    const collectionCard = document.getElementById("collectionCard");
+    const productsTitle = document.getElementById("productsTitle");
+
+    // 🔎 Se estiver pesquisando algo
+    if (searchValue !== "") {
+
+        flashHeader.style.display = "none";
+        flashSection.style.display = "none";
+        flashIndicator.style.display = "none";
+        collectionCard.style.display = "none";
+        productsTitle.style.display = "none";
+
+    } else {
+
+        flashHeader.style.display = "flex";
+        flashSection.style.display = "flex";
+        flashIndicator.style.display = "block";
+        collectionCard.style.display = "block";
+        productsTitle.style.display = "block";
+    }
+
+    // Filtrar apenas produtos com data-name
     products.forEach(product => {
+
         const name = product.getAttribute('data-name');
         const number = product.getAttribute('data-number');
 
-        if (
-  (name && name.includes(searchValue)) ||
-  (number && number.includes(searchValue))
-) {
+        if (!name || !number) return; // ignora card da coleção
+
+        if (name.includes(searchValue) || number.includes(searchValue)) {
             product.style.display = "block";
         } else {
             product.style.display = "none";
         }
-    });
-});
 
-const flashContainer = document.querySelector('.flash-container');
-const flashIndicator = document.getElementById('flashIndicator');
-
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    flashContainer.scrollBy({
-      left: 120,
-      behavior: 'smooth'
     });
 
-    setTimeout(() => {
-      flashContainer.scrollBy({
-        left: -60,
-        behavior: 'smooth'
-      });
-
-      setTimeout(() => {
-        flashIndicator.style.opacity = "1";
-      }, 600);
-
-    }, 1200);
-
-  }, 800);
 });
 
 fetch("ofertas.json")
