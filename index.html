@@ -1122,6 +1122,83 @@ if (hours === 0 && minutes < 10) {
 }
 
 startGlobalFlashTimer();
+
+// ===== CARDS DE DESCONTOS 24H =====
+fetch("descontos.json")
+  .then(response => response.json())
+  .then(data => {
+
+    const container = document.getElementById("descontosSection");
+    container.innerHTML = "";
+
+    const cycleDuration = 24 * 60 * 60 * 1000; // 24 horas
+    const now = Date.now();
+    const currentCycle = Math.floor(now / cycleDuration);
+
+    const itemsPerCycle = 10; // quantos produtos mostrar
+    const totalBlocks = Math.ceil(data.length / itemsPerCycle);
+
+    const currentBlock = currentCycle % totalBlocks;
+
+    const startIndex = currentBlock * itemsPerCycle;
+    const endIndex = startIndex + itemsPerCycle;
+
+    const selectedProducts = data.slice(startIndex, endIndex);
+
+    selectedProducts.forEach(produto => {
+
+      const item = document.createElement("a");
+      item.href = produto.link;
+      item.target = "_blank";
+      item.className = "flash-item";
+
+      item.innerHTML = `
+        <img src="${produto.image}" alt="${produto.name}">
+        <div class="flash-name">${produto.name}</div>
+      `;
+
+      container.appendChild(item);
+    });
+
+    // Inicia animação de scroll leve
+    setTimeout(() => {
+      if(container.scrollWidth > container.clientWidth){
+        container.scrollBy({ left: 30, behavior: 'smooth' });
+        setTimeout(() => container.scrollBy({ left: -30, behavior: 'smooth' }), 500);
+      }
+    }, 500);
+  });
+
+// ===== TIMER GLOBAL 24H =====
+function startDescontosTimer() {
+  const timerElement = document.getElementById("descontosTimer");
+
+  function updateTimer() {
+    const now = new Date();
+
+    // Próximo ciclo 24h (meia-noite)
+    const nextTime = new Date();
+    nextTime.setHours(24, 0, 0, 0); // meia-noite
+
+    const diff = nextTime - now;
+
+    if (diff <= 0) return;
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    timerElement.textContent =
+      hours.toString().padStart(2, "0") + ":" +
+      minutes.toString().padStart(2, "0") + ":" +
+      seconds.toString().padStart(2, "0");
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+startDescontosTimer();
     
 </script>
 
