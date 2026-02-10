@@ -942,7 +942,7 @@ h1 {
 
 <script>
 const searchInput = document.getElementById('searchInput');
-const products = document.querySelectorAll('.card');
+const products = document.querySelectorAll('.card[data-name]');
 
 searchInput.addEventListener('keyup', function() {
     const searchValue = this.value.toLowerCase();
