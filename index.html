@@ -951,7 +951,10 @@ searchInput.addEventListener('keyup', function() {
         const name = product.getAttribute('data-name');
         const number = product.getAttribute('data-number');
 
-        if (name.includes(searchValue) || number.includes(searchValue)) {
+        if (
+  (name && name.includes(searchValue)) ||
+  (number && number.includes(searchValue))
+) {
             product.style.display = "block";
         } else {
             product.style.display = "none";
