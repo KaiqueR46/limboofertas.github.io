@@ -984,13 +984,17 @@ searchInput.addEventListener('keyup', function() {
 
     } else {
 
-        // Mostra tudo novamente
-        flashHeader.style.display = "flex";
-        flashSection.style.display = "flex";
-        flashIndicator.style.display = "block";
-        collectionCard.style.display = "block";
-        productsTitle.style.display = "block";
-    }
+    // Mostra tudo novamente (restaura padrão do CSS)
+    flashHeader.style.display = "";
+    flashSection.style.display = "";
+    flashIndicator.style.display = "";
+    collectionCard.style.display = "";
+    productsTitle.style.display = "";
+    descontosHeader.style.display = "";
+    descontosSection.style.display = "";
+    descontosIndicator.style.display = "";
+
+}
 
     products.forEach(product => {
 
