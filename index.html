@@ -1027,6 +1027,29 @@ fetch("ofertas.json")
 
   });
 
+// ===== Scroll automático leve + indicador =====
+document.addEventListener("DOMContentLoaded", function() {
+
+  const flashContainer = document.getElementById("flashSection");
+  const flashIndicator = document.getElementById("flashIndicator");
+
+  if (!flashContainer || !flashIndicator) return;
+
+  // Mostra o indicador depois de carregar
+  setTimeout(() => {
+    flashIndicator.style.opacity = "1";
+  }, 1500);
+
+  // Pequeno movimento automático
+  setTimeout(() => {
+    flashContainer.scrollBy({
+      left: 60,
+      behavior: "smooth"
+    });
+  }, 2000);
+
+});
+    
  function startGlobalFlashTimer() {
   const timerElement = document.getElementById("flashTimer");
 
