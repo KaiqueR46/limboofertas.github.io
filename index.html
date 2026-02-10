@@ -943,9 +943,12 @@ h1 {
 </div>
 
 <script>
+const searchInput = document.getElementById('searchInput');
+const products = document.querySelectorAll('#products .card');
+
 searchInput.addEventListener('keyup', function() {
 
-    const searchValue = this.value.toLowerCase().trim();
+    const searchValue = this.value.toLowerCase();
 
     const flashHeader = document.getElementById("flashSectionHeader");
     const flashSection = document.getElementById("flashSection");
@@ -953,9 +956,9 @@ searchInput.addEventListener('keyup', function() {
     const collectionCard = document.getElementById("collectionCard");
     const productsTitle = document.getElementById("productsTitle");
 
-    // 🔎 Se estiver pesquisando algo
-    if (searchValue !== "") {
+    if (searchValue.length > 0) {
 
+        // Esconde partes superiores
         flashHeader.style.display = "none";
         flashSection.style.display = "none";
         flashIndicator.style.display = "none";
@@ -964,6 +967,7 @@ searchInput.addEventListener('keyup', function() {
 
     } else {
 
+        // Mostra tudo novamente
         flashHeader.style.display = "flex";
         flashSection.style.display = "flex";
         flashIndicator.style.display = "block";
@@ -971,13 +975,10 @@ searchInput.addEventListener('keyup', function() {
         productsTitle.style.display = "block";
     }
 
-    // Filtrar apenas produtos com data-name
     products.forEach(product => {
 
-        const name = product.getAttribute('data-name');
-        const number = product.getAttribute('data-number');
-
-        if (!name || !number) return; // ignora card da coleção
+        const name = product.getAttribute('data-name')?.toLowerCase() || "";
+        const number = product.getAttribute('data-number')?.toLowerCase() || "";
 
         if (name.includes(searchValue) || number.includes(searchValue)) {
             product.style.display = "block";
