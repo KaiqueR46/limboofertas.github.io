@@ -1263,6 +1263,90 @@ startDescontosTimer();
 
   })
   .catch(error => console.error("Erro ao carregar descontos:", error));    
+
+// ===== ACHADINHOS INTELIGENTE =====
+
+let achadinhosData = [];
+let shuffledAchadinhos = [];
+let achadinhosIndex = 0;
+const itemsPerPage = 20;
+
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function renderAchadinhos() {
+
+  const container = document.getElementById("achadinhosSection");
+  container.innerHTML = "";
+
+  // Se acabou tudo → reembaralha
+  if (achadinhosIndex >= shuffledAchadinhos.length) {
+    shuffledAchadinhos = shuffleArray([...achadinhosData]);
+    achadinhosIndex = 0;
+  }
+
+  const nextItems = shuffledAchadinhos.slice(
+    achadinhosIndex,
+    achadinhosIndex + itemsPerPage
+  );
+
+  nextItems.forEach(produto => {
+
+    const item = document.createElement("a");
+    item.href = produto.link;
+    item.target = "_blank";
+    item.className = "flash-item";
+
+    item.innerHTML = `
+      <img src="${produto.image}" alt="${produto.name}">
+      <div class="flash-name">${produto.name}</div>
+    `;
+
+    container.appendChild(item);
+  });
+
+  achadinhosIndex += itemsPerPage;
+
+  // animação leve scroll
+  setTimeout(() => {
+    if(container.scrollWidth > container.clientWidth){
+      container.scrollBy({ left: 60, behavior: 'smooth' });
+    }
+  }, 500);
+
+  setTimeout(() => {
+    if(container.scrollWidth > container.clientWidth){
+      container.scrollBy({ left: -60, behavior: 'smooth' });
+    }
+  }, 1500);
+}
+
+// Carrega JSON
+fetch("achadinhos.json")
+  .then(response => response.json())
+  .then(data => {
+
+    if (!data || data.length === 0) return;
+
+    achadinhosData = data;
+    shuffledAchadinhos = shuffleArray([...achadinhosData]);
+
+    renderAchadinhos();
+
+    // Botão atualizar
+    document
+      .getElementById("achadinhosBtn")
+      .addEventListener("click", renderAchadinhos);
+
+    // Indicador
+    const indicator = document.getElementById("achadinhosIndicator");
+    setTimeout(() => {
+      indicator.style.opacity = "1";
+    }, 1500);
+
+  })
+  .catch(error => console.error("Erro ao carregar achadinhos:", error));
     
 </script>
 
