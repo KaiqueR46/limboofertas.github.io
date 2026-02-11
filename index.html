@@ -1147,9 +1147,13 @@ fetch("descontos.json")
     const container = document.getElementById("descontosSection");
     container.innerHTML = "";
 
-    const cycleDuration = 24 * 60 * 60 * 1000; // 24 horas
-    const now = Date.now();
-    const currentCycle = Math.floor(now / cycleDuration);
+    const now = new Date();
+
+// Calcula quantos dias já passaram desde 01/01/2024 (ou qualquer data base fixa)
+const baseDate = new Date(2024, 0, 1); // 1 Jan 2024
+const diffDays = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
+
+const currentCycle = diffDays;
 
     const itemsPerCycle = 20; // quantos produtos mostrar
     const totalBlocks = Math.ceil(data.length / itemsPerCycle);
