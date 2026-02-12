@@ -1290,22 +1290,29 @@ function shuffleArray(array) {
   return newArray;
 }
 
-function renderAchadinhos() {
+function renderAchadinhos(avancar = false) {
 
   const container = document.getElementById("achadinhosSection");
   container.innerHTML = "";
 
-  // Se acabou tudo → nova ordem
-  if (achadinhosIndex >= shuffledAchadinhos.length) {
+  // Só avança se clicou no botão
+  if (avancar) {
+    achadinhosIndex += itemsPerPage;
 
-    shuffledAchadinhos = shuffleArray(achadinhosData);
+    // Se acabou tudo → nova ordem
+    if (achadinhosIndex >= shuffledAchadinhos.length) {
 
-    localStorage.setItem(
-      "achadinhosLista",
-      JSON.stringify(shuffledAchadinhos)
-    );
+      shuffledAchadinhos = shuffleArray(achadinhosData);
 
-    achadinhosIndex = 0;
+      localStorage.setItem(
+        "achadinhosLista",
+        JSON.stringify(shuffledAchadinhos)
+      );
+
+      achadinhosIndex = 0;
+    }
+
+    localStorage.setItem("achadinhosIndex", achadinhosIndex);
   }
 
   const nextItems = shuffledAchadinhos.slice(
@@ -1327,10 +1334,6 @@ function renderAchadinhos() {
 
     container.appendChild(item);
   });
-
-  achadinhosIndex += itemsPerPage;
-
-  localStorage.setItem("achadinhosIndex", achadinhosIndex);
 
   // Scroll leve
   setTimeout(() => {
